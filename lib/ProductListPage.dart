@@ -16,21 +16,32 @@ class ProductListPage extends StatelessWidget {
       body: Center(
         child: Obx(() => productController.isLoading.value
             ? CircularProgressIndicator()
-            : ListView.builder(
-            itemCount: productController.productResponModelCtr.length,
-            itemBuilder: (BuildContext ctx, int idx) {
-              // mengambil object per index nya dibuat var product
-              final product = productController.productResponModelCtr[idx];
-              return Container(
-                margin: EdgeInsets.all(10),
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(product.name),
+            : Column(
+                children: [
+                  Text("Welcome " +
+                      productController.sessionUsername.value.toString()),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.8,
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: productController.productResponModelCtr.length,
+                        itemBuilder: (BuildContext ctx, int idx) {
+                          // mengambil object per index nya dibuat var product
+                          final product =
+                              productController.productResponModelCtr[idx];
+                          return Container(
+                            margin: EdgeInsets.all(10),
+                            child: Card(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(product.name),
+                              ),
+                            ),
+                          );
+                        }),
                   ),
-                ),
-              );
-            })),
+                ],
+              )),
       ),
     );
   }

@@ -1,16 +1,25 @@
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'ProductResponseModel.dart';
 import 'package:http/http.dart' as http;
 
 class ControllerListProduct extends GetxController {
   RxList<ProductResponseModel> productResponModelCtr =
       <ProductResponseModel>[].obs;
-
+  SharedPreferences? prefs;
   RxBool isLoading = true.obs;
+
+  RxString sessionUsername = "".obs;
+  void loadSession() async{
+    prefs = await SharedPreferences.getInstance();
+    sessionUsername.value = prefs!.getString("username") ?? "no data";
+    print("get username "+ sessionUsername.value.toString());
+  }
 
   @override
   void onInit(){
     super.onInit();
+    loadSession();
     loadData();
   }
 
